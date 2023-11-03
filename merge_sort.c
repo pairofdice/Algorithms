@@ -20,8 +20,8 @@ void merge_merge(int *arr, int *arr_temp, size_t left, size_t middle, size_t rig
     size_t i_smallest_right = middle + 1;
     size_t i_dest = left;
 
+    // select smaller value from the sub-arrays and push to destionation
     while (i_smallest_left <= middle && i_smallest_right <= right) {
-        // printf("L_i: %d arr[L_i]: %d, R_i: %d, arr[R_i]: %d \n", i_smallest_left, arr_temp[i_smallest_left], i_smallest_left, arr_temp[i_smallest_right]);
         if (arr_temp[i_smallest_left] <= arr_temp[i_smallest_right]) {
             arr[i_dest] = arr_temp[i_smallest_left];
             ++i_smallest_left;
@@ -30,22 +30,24 @@ void merge_merge(int *arr, int *arr_temp, size_t left, size_t middle, size_t rig
             arr[i_dest] = arr_temp[i_smallest_right];
             ++i_smallest_right;
         }
-        // printf("Chosen: %d, index: %d\n", arr[i_dest], i_dest);
         ++i_dest;
     }
+
+    // push the remaining already sorted values
     while (i_smallest_left <= middle) {
         arr[i_dest] = arr_temp[i_smallest_left];
-        // printf("Chosen: %d, index: %d\n", arr[i_dest], i_dest);
         ++i_smallest_left;
         ++i_dest;
     }
+
+    // push the remaining already sorted values
     while (i_smallest_right <= right) {
         arr[i_dest] = arr_temp[i_smallest_right];
-        // printf("Chosen: %d, index: %d\n", arr[i_dest], i_dest);
         ++i_smallest_right;
         ++i_dest;
     }
 
+    // update our working copy
     size_t i = left;
     while (i <= right) {
         arr_temp[i] = arr[i];
@@ -59,7 +61,6 @@ void merge_divide(int *arr, int *arr_temp, size_t left, size_t right) {
         return ;
 
     size_t middle = (left + right) / 2;          // midddle point
-    // printf("left: %d, middle: %d, right: %d\n", left, middle, right); 
     merge_divide(arr, arr_temp, left, middle);
     merge_divide(arr, arr_temp, middle + 1, right);
 
@@ -86,8 +87,8 @@ void merge_sort(int *arr, size_t size) {
 
 
 int main () {
-    int arrC[N] = { 5, 6, 12, 3, 9, 7, 4, 10, 1, 2, 11, 8 };
-    int arr[N] = { 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+    int arr[N] = { 5, 6, 12, 3, 9, 7, 4, 10, 1, 2, 11, 8 };
+    int arrC[N] = { 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 };
     int arrB[N] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
     print_arr(arr, N);
